@@ -3,12 +3,13 @@ arr_playfield = [["1","2","3"],
                  ["4","5","6"],
                  ["7","8","9"]]
 
+#Merker Variablen Deklaration
 onePlayerWon = False
 playerOneTurn = True
 userInput = 0
 
 
-
+#Funktion zur Inputüberprüfung
 def isInputValid(input):
     if (input > 0) and (input < 10):
 
@@ -23,6 +24,7 @@ def isInputValid(input):
         print("Entered Charakter was invalid")
         return False
 
+#Funktion zum Herausfinden der Zeile
 def findPlayedRow(input):
     if input <= 3:
         return 0
@@ -33,6 +35,7 @@ def findPlayedRow(input):
     else:
         return 
     
+#Funktion zum Herausfinden der Spalte
 def findPlayedColumn(input):
 
     row = findPlayedRow(input) 
@@ -40,52 +43,54 @@ def findPlayedColumn(input):
     return column
 
 
-
+#-------------------------------------------------------------------------------------
 
 while not onePlayerWon :
-    print(" " , arr_playfield[0] , '\n' , arr_playfield[1] , '\n' , arr_playfield[2])
+    #Ausgabe Spielfeld
+    print( arr_playfield[0] , '\n' , arr_playfield[1] , '\n' , arr_playfield[2])
 
+    #Zug Spieler 1
     if playerOneTurn : 
 
         print("Player 1, please Enter the desired Space for your X to be placed")
 
-        while True:
-            try:
-                userInput = int(input())
-                break
-            except:
-                print("Please Enter a valid Number")
+        #Nutzerinput setzen und überprüfen
+        try:
+            userInput = int(input())
+        except:
+            print("Please Enter a Number")
 
         while isInputValid(userInput) == False:
-            while True:
-                try:
-                    userInput = int(input())
-                    break
-                except:
-                    print("Please Enter a valid Number")
-        
+            try:
+                userInput = int(input())
+            except:
+                print("Please Enter a Number")
+
+
+        #Setzen des Spielzeichens
         arr_playfield[findPlayedRow(userInput)][findPlayedColumn(userInput)] = "X"
 
         playerOneTurn = False
 
+    #Zug Spieler 2
     else :
         print("Player 2, please Enter the desired Space for your O to be placed")
 
-        while True:
-            try:
-                userInput = int(input())
-                break
-            except:
-                print("Please Enter a valid Number")
+
+        #Nutzerinput setzen und überprüfen
+        try:
+            userInput = int(input())
+        except:
+            print("Please Enter a Number")
 
         while isInputValid(userInput) == False:
-            while True:
-                try:
-                    userInput = int(input())
-                    break
-                except:
-                    print("Please Enter a valid Number")
+            try:
+                userInput = int(input())
+            except:
+                print("Please Enter a Number")
 
+
+        #Setzen des Spielzeichens
         arr_playfield[findPlayedRow(userInput)][findPlayedColumn(userInput)] = "O"
 
         playerOneTurn = True
