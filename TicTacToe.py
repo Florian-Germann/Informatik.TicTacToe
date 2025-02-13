@@ -49,16 +49,20 @@ while not onePlayerWon :
 
         print("Player 1, please Enter the desired Space for your X to be placed")
 
-        try:
-            userInput = int(input())
-        except:
-            print("Please Enter a Number")
-
-        while isInputValid(userInput) == False:
+        while True:
             try:
                 userInput = int(input())
+                break
             except:
-                print("Please Enter a Number")
+                print("Please Enter a valid Number")
+
+        while isInputValid(userInput) == False:
+            while True:
+                try:
+                    userInput = int(input())
+                    break
+                except:
+                    print("Please Enter a valid Number")
         
         arr_playfield[findPlayedRow(userInput)][findPlayedColumn(userInput)] = "X"
 
@@ -67,16 +71,20 @@ while not onePlayerWon :
     else :
         print("Player 2, please Enter the desired Space for your O to be placed")
 
-        try:
-            userInput = int(input())
-        except:
-            print("Please Enter a Number")
-
-        while isInputValid(userInput) == False:
+        while True:
             try:
                 userInput = int(input())
+                break
             except:
-                print("Please Enter a Number")
+                print("Please Enter a valid Number")
+
+        while isInputValid(userInput) == False:
+            while True:
+                try:
+                    userInput = int(input())
+                    break
+                except:
+                    print("Please Enter a valid Number")
 
         arr_playfield[findPlayedRow(userInput)][findPlayedColumn(userInput)] = "O"
 
