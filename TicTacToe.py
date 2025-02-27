@@ -4,9 +4,11 @@ arr_playfield = [["1","2","3"],
                  ["7","8","9"]]
 
 #Merker Variablen Deklaration
-onePlayerWon = False
+gameEnded = False
 playerOneTurn = True
 userInput = 0
+moveCount = 0
+gameStatus = 0
 
 
 #Funktion zur Inputüberprüfung
@@ -42,10 +44,49 @@ def findPlayedColumn(input):
     column = input - (row * 3 + 1)
     return column
 
+#check for game ending
+def checkPlayerWon():
+    #check line
+    for i in range(0,2):
+        if arr_playfield[i][findPlayedColumn(userInput)] != arr_playfield[findPlayedRow(userInput)][findPlayedColumn(userInput)]:
+            break
+        if i == 2:
+            return 1
+
+    #check column
+    for i in range(0,2):
+        if arr_playfield[findPlayedRow(userInput)][i] != arr_playfield[findPlayedRow(userInput)][findPlayedColumn(userInput)]:
+            break
+        if i == 2:
+            return 1
+
+    #check diagonal
+    if findPlayedRow(userInput) == findPlayedColumn(userInput):
+        for i in range(0,2):
+            if arr_playfield[i][i] != arr_playfield[findPlayedRow(userInput)][findPlayedColumn(userInput)]:
+                break
+        if i == 2:
+            return 1
+
+    #check antidiagonal
+    if findPlayedRow(userInput) + findPlayedColumn(userInput) == 2:
+        for i in range(0,2):
+            if arr_playfield[i][2-i] != arr_playfield[findPlayedRow(userInput)][findPlayedColumn(userInput)]:
+                break
+        if i == 2:
+            return 1
+
+    #check draw
+    if moveCount == 9:
+        return 2
+
+    return 0
+
+
 
 #-------------------------------------------------------------------------------------
 
-while not onePlayerWon :
+while not gameEnded :
     #Ausgabe Spielfeld
     print( arr_playfield[0] , '\n' , arr_playfield[1] , '\n' , arr_playfield[2])
 
@@ -70,6 +111,20 @@ while not onePlayerWon :
         #Setzen des Spielzeichens
         arr_playfield[findPlayedRow(userInput)][findPlayedColumn(userInput)] = "X"
 
+        gameStatus = checkPlayerWon()
+
+        match gameStatus:
+            case 1: 
+                print("Player 1 Won")
+                gameEnded = True
+                break
+            case 2:
+                print("Draw")
+                gameEnded = True
+                break
+            case 0:
+                break
+
         playerOneTurn = False
 
     #Zug Spieler 2
@@ -92,5 +147,19 @@ while not onePlayerWon :
 
         #Setzen des Spielzeichens
         arr_playfield[findPlayedRow(userInput)][findPlayedColumn(userInput)] = "O"
+
+        gameStatus = checkPlayerWon()
+
+        match gameStatus:
+            case 1: 
+                print("Player 2 Won")
+                gameEnded = True
+                break
+            case 2:
+                print("Draw")
+                gameEnded = True
+                break
+            case 0:
+                break
 
         playerOneTurn = True
