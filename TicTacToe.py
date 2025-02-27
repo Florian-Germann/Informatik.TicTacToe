@@ -46,15 +46,15 @@ def findPlayedColumn(input):
 
 #check for game ending
 def checkPlayerWon():
-    #check line
-    for i in range(0,2):
+    #check column
+    for i in range(0,3):
         if arr_playfield[i][findPlayedColumn(userInput)] != arr_playfield[findPlayedRow(userInput)][findPlayedColumn(userInput)]:
             break
         if i == 2:
             return 1
 
-    #check column
-    for i in range(0,2):
+    #check line
+    for i in range(0,3):
         if arr_playfield[findPlayedRow(userInput)][i] != arr_playfield[findPlayedRow(userInput)][findPlayedColumn(userInput)]:
             break
         if i == 2:
@@ -62,19 +62,19 @@ def checkPlayerWon():
 
     #check diagonal
     if findPlayedRow(userInput) == findPlayedColumn(userInput):
-        for i in range(0,2):
+        for i in range(0,3):
             if arr_playfield[i][i] != arr_playfield[findPlayedRow(userInput)][findPlayedColumn(userInput)]:
                 break
-        if i == 2:
-            return 1
+            if i == 2:
+                return 1
 
     #check antidiagonal
     if findPlayedRow(userInput) + findPlayedColumn(userInput) == 2:
-        for i in range(0,2):
+        for i in range(0,3):
             if arr_playfield[i][2-i] != arr_playfield[findPlayedRow(userInput)][findPlayedColumn(userInput)]:
                 break
-        if i == 2:
-            return 1
+            if i == 2:
+                return 1
 
     #check draw
     if moveCount == 9:
@@ -86,9 +86,10 @@ def checkPlayerWon():
 
 #-------------------------------------------------------------------------------------
 
+#Ausgabe Spielfeld
+print( arr_playfield[0] , '\n' , arr_playfield[1] , '\n' , arr_playfield[2])
+
 while not gameEnded :
-    #Ausgabe Spielfeld
-    print( arr_playfield[0] , '\n' , arr_playfield[1] , '\n' , arr_playfield[2])
 
     #Zug Spieler 1
     if playerOneTurn : 
@@ -112,6 +113,7 @@ while not gameEnded :
         arr_playfield[findPlayedRow(userInput)][findPlayedColumn(userInput)] = "X"
 
         gameStatus = checkPlayerWon()
+        print( arr_playfield[0] , '\n' , arr_playfield[1] , '\n' , arr_playfield[2])
 
         match gameStatus:
             case 1: 
@@ -121,8 +123,6 @@ while not gameEnded :
             case 2:
                 print("Draw")
                 gameEnded = True
-                break
-            case 0:
                 break
 
         playerOneTurn = False
@@ -149,6 +149,7 @@ while not gameEnded :
         arr_playfield[findPlayedRow(userInput)][findPlayedColumn(userInput)] = "O"
 
         gameStatus = checkPlayerWon()
+        print( arr_playfield[0] , '\n' , arr_playfield[1] , '\n' , arr_playfield[2])
 
         match gameStatus:
             case 1: 
@@ -158,8 +159,6 @@ while not gameEnded :
             case 2:
                 print("Draw")
                 gameEnded = True
-                break
-            case 0:
                 break
 
         playerOneTurn = True
