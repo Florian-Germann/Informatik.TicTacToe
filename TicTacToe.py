@@ -112,9 +112,12 @@ while not gameEnded :
         #Setzen des Spielzeichens
         arr_playfield[findPlayedRow(userInput)][findPlayedColumn(userInput)] = "X"
 
-        gameStatus = checkPlayerWon()
+        #Ausgabe Spielfeld
         print( arr_playfield[0] , '\n' , arr_playfield[1] , '\n' , arr_playfield[2])
 
+
+        #prüfen, ob ein Spieler gewonnen hat
+        gameStatus = checkPlayerWon()
         match gameStatus:
             case 1: 
                 print("Player 1 Won")
@@ -124,7 +127,7 @@ while not gameEnded :
                 print("Draw")
                 gameEnded = True
                 break
-
+        
         playerOneTurn = False
 
     #Zug Spieler 2
@@ -148,9 +151,13 @@ while not gameEnded :
         #Setzen des Spielzeichens
         arr_playfield[findPlayedRow(userInput)][findPlayedColumn(userInput)] = "O"
 
-        gameStatus = checkPlayerWon()
+
+        #Ausgabe Spielfeld
         print( arr_playfield[0] , '\n' , arr_playfield[1] , '\n' , arr_playfield[2])
 
+
+        #prüfen, ob ein Spieler gewonnen hat
+        gameStatus = checkPlayerWon()
         match gameStatus:
             case 1: 
                 print("Player 2 Won")
@@ -162,3 +169,6 @@ while not gameEnded :
                 break
 
         playerOneTurn = True
+
+        
+    moveCount += 1
