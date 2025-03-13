@@ -11,9 +11,18 @@ import random
 #-------------------------------------------------------------------------------------
 
 #empty Playfield creation
-arr_playfield = [["1","2","3"],
-                 ["4","5","6"],
-                 ["7","8","9"]]
+arr_playfield = [["1", "2", "3"],
+                 ["4", "5", "6"],
+                 ["7", "8", "9"]]
+
+def printPlayfield():
+    print("\n")
+    print(" " + arr_playfield[0][0] + " | " + arr_playfield[0][1] + " | " + arr_playfield[0][2])
+    print("---+---+---")
+    print(" " + arr_playfield[1][0] + " | " + arr_playfield[1][1] + " | " + arr_playfield[1][2])
+    print("---+---+---")
+    print(" " + arr_playfield[2][0] + " | " + arr_playfield[2][1] + " | " + arr_playfield[2][2])
+    print("\n")
 
 #Merker Variablen Deklaration
 gameEnded = False
@@ -117,6 +126,7 @@ def easyBot():
     legalMoves = getLegalMoves()
     randomMove = random.choice(legalMoves)
     arr_playfield[findPlayedRow(randomMove)][findPlayedColumn(randomMove)] = "O"
+    printPlayfield()
     userInput = randomMove
 
 #medium bot - this bot will try to win itself if possible, otherwise it will just place its sign randomly
@@ -124,6 +134,7 @@ def mediumBot():
     global userInput
     if canBotWin() != None:
         arr_playfield[findPlayedRow(canBotWin())][findPlayedColumn(canBotWin())] = "O"
+        printPlayfield()
         userInput = canBotWin()
     else:
         easyBot()
@@ -136,6 +147,7 @@ def hardBot():
     if winMove is not None:
         row, col = findPlayedRow(winMove), findPlayedColumn(winMove)
         arr_playfield[row][col] = "O"
+        printPlayfield()
         userInput = winMove
         return
 
@@ -144,6 +156,7 @@ def hardBot():
     if blockMove is not None:
         row, col = findPlayedRow(blockMove), findPlayedColumn(blockMove)
         arr_playfield[row][col] = "O"
+        printPlayfield()
         userInput = blockMove
         return
 
@@ -156,6 +169,7 @@ def hardBot():
         column = findPlayedColumn(move)
 
         arr_playfield[row][column] = "O"  # Testweise den Zug setzen
+        printPlayfield()
         score = minimax(False)  # Minimax für den Gegner aufrufen
         arr_playfield[row][column] = str(move)  # Zug zurücksetzen
 
@@ -167,6 +181,7 @@ def hardBot():
         row = findPlayedRow(bestMove)
         column = findPlayedColumn(bestMove)
         arr_playfield[row][column] = "O"
+        printPlayfield()
         userInput = bestMove
 
 def minimax(isMaximizing):
@@ -249,7 +264,7 @@ def startQuestionaire():
     print("The Game will start now")
     print("Player 1 starts the game")
 
-    print(arr_playfield[0], '\n', arr_playfield[1], '\n', arr_playfield[2])
+    printPlayfield()
 
 #-------------------------------------------------------------------------------------
 
@@ -276,10 +291,10 @@ while not gameEnded:
         arr_playfield[findPlayedRow(userInput)][findPlayedColumn(userInput)] = "X"
 
         # Ausgabe Spielfeld
-        print(arr_playfield[0], '\n', arr_playfield[1], '\n', arr_playfield[2])
+        printPlayfield()
 
         # Prüfen, ob ein Spieler gewonnen hat
-        gameStatus = checkPlayerWon("X") if playerOneTurn else checkPlayerWon("O")
+        gameStatus = checkPlayerWon("X") if not playerOneTurn else checkPlayerWon("O")
         match gameStatus:
             case 1:
                 print("Player 1 Won")
@@ -322,8 +337,7 @@ while not gameEnded:
             arr_playfield[findPlayedRow(userInput)][findPlayedColumn(userInput)] = "O"
 
         # Ausgabe Spielfeld
-        print(arr_playfield[0], '\n', arr_playfield[1], '\n', arr_playfield[2])
-
+        printPlayfield()
         # Prüfen, ob ein Spieler gewonnen hat
         gameStatus = checkPlayerWon("X") if playerOneTurn else checkPlayerWon("O")
         match gameStatus:
