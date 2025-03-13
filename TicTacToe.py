@@ -147,7 +147,7 @@ def hardBot():
     if winMove is not None:
         row, col = findPlayedRow(winMove), findPlayedColumn(winMove)
         arr_playfield[row][col] = "O"
-        printPlayfield()
+        #printPlayfield()
         userInput = winMove
         return
 
@@ -156,7 +156,7 @@ def hardBot():
     if blockMove is not None:
         row, col = findPlayedRow(blockMove), findPlayedColumn(blockMove)
         arr_playfield[row][col] = "O"
-        printPlayfield()
+        #printPlayfield()
         userInput = blockMove
         return
 
@@ -169,7 +169,7 @@ def hardBot():
         column = findPlayedColumn(move)
 
         arr_playfield[row][column] = "O"  # Testweise den Zug setzen
-        printPlayfield()
+        #printPlayfield()
         score = minimax(False)  # Minimax für den Gegner aufrufen
         arr_playfield[row][column] = str(move)  # Zug zurücksetzen
 
@@ -181,7 +181,7 @@ def hardBot():
         row = findPlayedRow(bestMove)
         column = findPlayedColumn(bestMove)
         arr_playfield[row][column] = "O"
-        printPlayfield()
+        #printPlayfield()
         userInput = bestMove
 
 def minimax(isMaximizing):
