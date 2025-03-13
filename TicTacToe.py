@@ -1,3 +1,11 @@
+# THIS IS A GAME OF TIC TAC TOE YOU CAN PLAY AGAINST THE COMPUTER OR ANOTHER PLAYER #
+
+# AUTHOR: Florian Germann
+# LAST CHANGED: 2025-02-16
+# LAST CHANGED BY: Piet Kreuzmann
+
+#######################################################################################
+
 #empty Playfield creation
 arr_playfield = [["1","2","3"],
                  ["4","5","6"],
@@ -81,6 +89,8 @@ def checkPlayerWon():
         return 2
 
     return 0
+
+
 
 
 
