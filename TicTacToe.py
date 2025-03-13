@@ -118,6 +118,9 @@ def hardBot():
     print("hard")
 
 def startQuestionaire():
+    global computerOpponent
+    global botDifficulty
+
     #Spielstart
     print("Welcome to TicTacToe")
     print("Do you want to play TicTacToe alone? (y/n)")
