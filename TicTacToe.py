@@ -103,6 +103,17 @@ def checkPlayerWon():
 
     return 0
 
+#find game winning moves for the bot
+def checkBotWin():
+
+    #check column
+    for i in range(0,3):
+        
+    
+
+
+#find game winning moves for the player
+
 #easy bot - this bot will just place its sign randomly
 def easyBot():
     legalMoves = getLegalMoves()
