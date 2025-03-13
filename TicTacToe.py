@@ -18,7 +18,7 @@ arr_playfield = [["1","2","3"],
 #Merker Variablen Deklaration
 gameEnded = False
 playerOneTurn = True
-userInput = 0
+userInput = 1
 moveCount = 0
 gameStatus = 0
 computerOpponent = False
@@ -114,20 +114,45 @@ def canBotWin():
         arr_playfield[row][column] = str(move)  # revert the move
     return None
 
+def canBotBlock():
+    for move in getLegalMoves():
+        row = findPlayedRow(move)
+        column = findPlayedColumn(move)
+        arr_playfield[row][column] = "X"
+        if checkPlayerWon() == 1:
+            arr_playfield[row][column] = str(move)  # revert the move
+            return move
+        arr_playfield[row][column] = str(move)  # revert the move
+    return None
 
 #easy bot - this bot will just place its sign randomly
 def easyBot():
+    global userInput
     legalMoves = getLegalMoves()
     randomMove = random.choice(legalMoves)
     arr_playfield[findPlayedRow(randomMove)][findPlayedColumn(randomMove)] = "O"
+    userInput = randomMove
     
 #medium bot - this bot will try to win itself if possible, otherwise it will just place its sign randomly
 def mediumBot():
-    print("medium")
+    global userInput
+    if canBotWin() != None:
+        arr_playfield[findPlayedRow(canBotWin())][findPlayedColumn(canBotWin())] = "O"
+        userInput = canBotWin()
+    else:
+        easyBot()
 
 #hard bot - this bot will try to win itself if possible, otherwise block the player from winning, otherwise it will just place its sign randomly
 def hardBot():
-    print("hard")
+    global userInput
+    if canBotWin() != None:
+        arr_playfield[findPlayedRow(canBotWin())][findPlayedColumn(canBotWin())] = "O"
+        userInput = canBotWin()
+    elif canBotBlock() != None:
+        arr_playfield[findPlayedRow(canBotBlock())][findPlayedColumn(canBotBlock())] = "O"
+        userInput = canBotBlock()
+    else:
+        easyBot()
 
 def startQuestionaire():
     global computerOpponent
@@ -267,7 +292,10 @@ while not gameEnded :
         gameStatus = checkPlayerWon()
         match gameStatus:
             case 1: 
-                print("Player 2 Won")
+                if (computerOpponent):
+                    print("Bot Won")
+                else:
+                    print("Player 2 Won")
                 gameEnded = True
                 break
             case 2:
