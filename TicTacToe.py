@@ -32,6 +32,7 @@ moveCount = 0
 gameStatus = 0
 computerOpponent = False
 botDifficulty = 0
+playerWantsToPlay = True
 
 #pool of legal moves for the bot
 def getLegalMoves():
@@ -268,58 +269,14 @@ def startQuestionaire():
 
 #-------------------------------------------------------------------------------------
 
-startQuestionaire()
+while playerWantsToPlay:
 
-while not gameEnded:
-    # Zug Spieler 1
-    if playerOneTurn:
-        print("Player 1, please Enter the desired Space for your X to be placed")
+    startQuestionaire()
 
-        # Nutzerinput setzen und überprüfen
-        try:
-            userInput = int(input())
-        except:
-            print("Please Enter a Number")
-
-        while isInputValid(userInput) == False:
-            try:
-                userInput = int(input())
-            except:
-                print("Please Enter a Number")
-
-        # Setzen des Spielzeichens
-        arr_playfield[findPlayedRow(userInput)][findPlayedColumn(userInput)] = "X"
-
-        # Ausgabe Spielfeld
-        printPlayfield()
-
-        # Prüfen, ob ein Spieler gewonnen hat
-        gameStatus = checkPlayerWon("X") if not playerOneTurn else checkPlayerWon("O")
-        match gameStatus:
-            case 1:
-                print("Player 1 Won")
-                gameEnded = True
-                break
-            case 2:
-                print("Draw")
-                gameEnded = True
-                break
-
-        playerOneTurn = False
-
-    # Zug Spieler 2
-    else:
-        if computerOpponent:
-            print("Bot is thinking")
-            # Botzug
-            if botDifficulty == 0:
-                easyBot()
-            elif botDifficulty == 1:
-                mediumBot()
-            elif botDifficulty == 2:
-                hardBot()
-        else:
-            print("Player 2, please Enter the desired Space for your O to be placed")
+    while not gameEnded:
+        # Zug Spieler 1
+        if playerOneTurn:
+            print("Player 1, please Enter the desired Space for your X to be placed")
 
             # Nutzerinput setzen und überprüfen
             try:
@@ -334,25 +291,93 @@ while not gameEnded:
                     print("Please Enter a Number")
 
             # Setzen des Spielzeichens
-            arr_playfield[findPlayedRow(userInput)][findPlayedColumn(userInput)] = "O"
+            arr_playfield[findPlayedRow(userInput)][findPlayedColumn(userInput)] = "X"
 
-        # Ausgabe Spielfeld
-        printPlayfield()
-        # Prüfen, ob ein Spieler gewonnen hat
-        gameStatus = checkPlayerWon("X") if playerOneTurn else checkPlayerWon("O")
-        match gameStatus:
-            case 1:
-                if computerOpponent:
-                    print("Bot Won")
-                else:
-                    print("Player 2 Won")
-                gameEnded = True
-                break
-            case 2:
-                print("Draw")
-                gameEnded = True
-                break
+            # Ausgabe Spielfeld
+            printPlayfield()
 
-        playerOneTurn = True
+            # Prüfen, ob ein Spieler gewonnen hat
+            gameStatus = checkPlayerWon("X") if not playerOneTurn else checkPlayerWon("O")
+            match gameStatus:
+                case 1:
+                    print("Player 1 Won")
+                    gameEnded = True
+                    break
+                case 2:
+                    print("Draw")
+                    gameEnded = True
+                    break
 
-    moveCount += 1
+            playerOneTurn = False
+
+        # Zug Spieler 2
+        else:
+            if computerOpponent:
+                print("Bot is thinking")
+                # Botzug
+                if botDifficulty == 0:
+                    easyBot()
+                elif botDifficulty == 1:
+                    mediumBot()
+                elif botDifficulty == 2:
+                    hardBot()
+            else:
+                print("Player 2, please Enter the desired Space for your O to be placed")
+
+                # Nutzerinput setzen und überprüfen
+                try:
+                    userInput = int(input())
+                except:
+                    print("Please Enter a Number")
+
+                while isInputValid(userInput) == False:
+                    try:
+                        userInput = int(input())
+                    except:
+                        print("Please Enter a Number")
+
+                # Setzen des Spielzeichens
+                arr_playfield[findPlayedRow(userInput)][findPlayedColumn(userInput)] = "O"
+
+            # Ausgabe Spielfeld
+            printPlayfield()
+            # Prüfen, ob ein Spieler gewonnen hat
+            gameStatus = checkPlayerWon("X") if playerOneTurn else checkPlayerWon("O")
+            match gameStatus:
+                case 1:
+                    if computerOpponent:
+                        print("Bot Won")
+                    else:
+                        print("Player 2 Won")
+                    gameEnded = True
+                    break
+                case 2:
+                    print("Draw")
+                    gameEnded = True
+                    break
+
+            playerOneTurn = True
+
+        moveCount += 1
+
+#--------------------------------------------------------------------------------
+# Abfrage ob das Spiel erneut gestartet werden soll
+
+    print("Do you want to play again? (y/n)")
+
+    while True:
+        userinput = input()
+        if userinput == "y":
+            gameEnded = False
+            playerOneTurn = True
+            moveCount = 0
+            arr_playfield = [["1", "2", "3"],
+                             ["4", "5", "6"],
+                             ["7", "8", "9"]]  # reset the playfield
+            break
+        elif userinput == "n":
+            playerWantsToPlay = False
+            break
+        else:
+            print("Please enter a valid input")
+
