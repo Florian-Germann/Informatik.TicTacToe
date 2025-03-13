@@ -9,6 +9,8 @@ playerOneTurn = True
 userInput = 0
 moveCount = 0
 gameStatus = 0
+computerOpponent = False
+botDifficulty = 0
 
 
 #Funktion zur Inputüberprüfung
@@ -82,11 +84,59 @@ def checkPlayerWon():
 
     return 0
 
+def easyBot():
+    print("easy")
 
+def mediumBot():
+    print("medium")
+
+def hardBot():
+    print("hard")
 
 #-------------------------------------------------------------------------------------
 
-#Ausgabe Spielfeld
+#Spielstart
+print("Welcome to TicTacToe")
+print("Do you want to play TicTacToe alone? (y/n)")
+
+while True:
+    userinput = input()
+    if userinput == "y":
+        print("You will play against the computer")
+        computerOpponent = True
+        break
+    elif userinput == "n":
+        print("You will play against another player")
+        computerOpponent = False
+        break
+    else:
+        print("Please enter a valid input")
+
+
+if(computerOpponent):
+    print("Should the Bot be easy medium or hard? (e/m/h)")
+    while True:
+        userinput = input()
+        if userinput == "e":
+            print("Bot is easy")
+            botDifficulty = 0
+            break
+        elif userinput == "m":
+            print("Bot is medium")
+            botDifficulty = 1
+            break
+        elif userinput == "h":
+            print("Bot is hard")
+            botDifficulty = 2
+            break
+        else:
+            print("Please enter a valid input")
+
+
+print("The Game will start now")
+print("Player 1 starts the game")
+
+
 print( arr_playfield[0] , '\n' , arr_playfield[1] , '\n' , arr_playfield[2])
 
 while not gameEnded :
@@ -132,24 +182,37 @@ while not gameEnded :
 
     #Zug Spieler 2
     else :
-        print("Player 2, please Enter the desired Space for your O to be placed")
+        if(computerOpponent):
+            print("Bot is thinking")
+            #Botzug
+            if botDifficulty == 0:
+                easyBot()
+            elif botDifficulty == 1:
+                mediumBot()
+            elif botDifficulty == 2:
+                hardBot()
+                
+
+        else:
+
+            print("Player 2, please Enter the desired Space for your O to be placed")
 
 
-        #Nutzerinput setzen und überprüfen
-        try:
-            userInput = int(input())
-        except:
-            print("Please Enter a Number")
-
-        while isInputValid(userInput) == False:
+            #Nutzerinput setzen und überprüfen
             try:
                 userInput = int(input())
             except:
                 print("Please Enter a Number")
 
+            while isInputValid(userInput) == False:
+                try:
+                    userInput = int(input())
+                except:
+                    print("Please Enter a Number")
 
-        #Setzen des Spielzeichens
-        arr_playfield[findPlayedRow(userInput)][findPlayedColumn(userInput)] = "O"
+
+            #Setzen des Spielzeichens
+            arr_playfield[findPlayedRow(userInput)][findPlayedColumn(userInput)] = "O"
 
 
         #Ausgabe Spielfeld
