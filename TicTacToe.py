@@ -6,6 +6,10 @@
 
 #######################################################################################
 
+import random
+
+#-------------------------------------------------------------------------------------
+
 #empty Playfield creation
 arr_playfield = [["1","2","3"],
                  ["4","5","6"],
@@ -20,6 +24,13 @@ gameStatus = 0
 computerOpponent = False
 botDifficulty = 0
 
+#pool of legal moves for the bot
+def getLegalMoves():
+    legalMoves = []
+    for i in range(1,10):
+        if not(arr_playfield[findPlayedRow(i)][findPlayedColumn(i)] == "X" or arr_playfield[findPlayedRow(i)][findPlayedColumn(i)] == "O"):
+            legalMoves.append(i)
+    return legalMoves
 
 #Funktion zur Inputüberprüfung
 def isInputValid(input):
@@ -92,12 +103,17 @@ def checkPlayerWon():
 
     return 0
 
+#easy bot - this bot will just place its sign randomly
 def easyBot():
-    print("easy")
-
+    legalMoves = getLegalMoves()
+    randomMove = random.choice(legalMoves)
+    arr_playfield[findPlayedRow(randomMove)][findPlayedColumn(randomMove)] = "O"
+    
+#medium bot - this bot will try to win itself if possible, otherwise it will just place its sign randomly
 def mediumBot():
     print("medium")
 
+#hard bot - this bot will try to win itself if possible, otherwise block the player from winning, otherwise it will just place its sign randomly
 def hardBot():
     print("hard")
 
