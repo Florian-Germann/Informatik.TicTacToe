@@ -103,6 +103,18 @@ def checkPlayerWon():
 
     return 0
 
+def canBotWin():
+    for move in getLegalMoves():
+        row = findPlayedRow(move)
+        column = findPlayedColumn(move)
+        arr_playfield[row][column] = "O"
+        if checkPlayerWon() == 1:
+            arr_playfield[row][column] = str(move)  # revert the move
+            return move
+        arr_playfield[row][column] = str(move)  # revert the move
+    return None
+
+
 #easy bot - this bot will just place its sign randomly
 def easyBot():
     legalMoves = getLegalMoves()
