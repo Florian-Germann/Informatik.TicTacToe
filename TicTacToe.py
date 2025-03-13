@@ -101,53 +101,56 @@ def mediumBot():
 def hardBot():
     print("hard")
 
+def startQuestionaire():
+    #Spielstart
+    print("Welcome to TicTacToe")
+    print("Do you want to play TicTacToe alone? (y/n)")
 
-
-#-------------------------------------------------------------------------------------
-
-#Spielstart
-print("Welcome to TicTacToe")
-print("Do you want to play TicTacToe alone? (y/n)")
-
-while True:
-    userinput = input()
-    if userinput == "y":
-        print("You will play against the computer")
-        computerOpponent = True
-        break
-    elif userinput == "n":
-        print("You will play against another player")
-        computerOpponent = False
-        break
-    else:
-        print("Please enter a valid input")
-
-
-if(computerOpponent):
-    print("Should the Bot be easy medium or hard? (e/m/h)")
     while True:
         userinput = input()
-        if userinput == "e":
-            print("Bot is easy")
-            botDifficulty = 0
+        if userinput == "y":
+            print("You will play against the computer")
+            computerOpponent = True
             break
-        elif userinput == "m":
-            print("Bot is medium")
-            botDifficulty = 1
-            break
-        elif userinput == "h":
-            print("Bot is hard")
-            botDifficulty = 2
+        elif userinput == "n":
+            print("You will play against another player")
+            computerOpponent = False
             break
         else:
             print("Please enter a valid input")
 
 
-print("The Game will start now")
-print("Player 1 starts the game")
+    if(computerOpponent):
+        print("Should the Bot be easy medium or hard? (e/m/h)")
+        while True:
+            userinput = input()
+            if userinput == "e":
+                print("Bot is easy")
+                botDifficulty = 0
+                break
+            elif userinput == "m":
+                print("Bot is medium")
+                botDifficulty = 1
+                break
+            elif userinput == "h":
+                print("Bot is hard")
+                botDifficulty = 2
+                break
+            else:
+                print("Please enter a valid input")
 
 
-print( arr_playfield[0] , '\n' , arr_playfield[1] , '\n' , arr_playfield[2])
+    print("The Game will start now")
+    print("Player 1 starts the game")
+
+
+    print( arr_playfield[0] , '\n' , arr_playfield[1] , '\n' , arr_playfield[2])
+
+
+#-------------------------------------------------------------------------------------
+
+startQuestionaire()
+
 
 while not gameEnded :
 
@@ -201,7 +204,7 @@ while not gameEnded :
                 mediumBot()
             elif botDifficulty == 2:
                 hardBot()
-                
+
 
         else:
 
