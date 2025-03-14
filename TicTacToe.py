@@ -15,7 +15,7 @@ arr_playfield = [["1", "2", "3"],
                  ["4", "5", "6"],
                  ["7", "8", "9"]]
 
-# ANSI Escape Codes für Farben
+# ANSI Escape Codes for colors
 RED = "\033[91m"  # Rotes X
 BLUE = "\033[94m"  # Blaues O
 RESET = "\033[0m"  # Zurück zur Standardfarbe
@@ -31,7 +31,7 @@ def printPlayfield():
             print("---+---+---")
     print("\n")
 
-#Merker Variablen Deklaration
+# Marker variable declaration
 gameEnded = False
 playerOneTurn = True
 userInput = 1
@@ -41,7 +41,7 @@ computerOpponent = False
 botDifficulty = 0
 playerWantsToPlay = True
 
-#pool of legal moves for the bot
+# Pool of legal moves for the bot
 def getLegalMoves():
     legalMoves = []  
     for i in range(1, 10):  
@@ -49,7 +49,7 @@ def getLegalMoves():
             legalMoves.append(i)
     return legalMoves  
 
-#Funktion zur Inputüberprüfung
+# Function to validate input
 def isInputValid(input):
     if (input > 0) and (input < 10):
         if not(arr_playfield[findPlayedRow(input)][findPlayedColumn(input)] == "X" or arr_playfield[findPlayedRow(input)][findPlayedColumn(input)] == "O"):
@@ -61,7 +61,7 @@ def isInputValid(input):
         print("Entered Charakter was invalid")
         return False
 
-#Funktion zum Herausfinden der Zeile
+# Function to determine the row
 def findPlayedRow(input):
     if input <= 3:
         return 0
@@ -72,33 +72,33 @@ def findPlayedRow(input):
     else:
         return None
     
-#Funktion zum Herausfinden der Spalte
+# Function to determine the column
 def findPlayedColumn(input):
     row = findPlayedRow(input) 
     column = input - (row * 3 + 1)
     return column
 
-#check for game ending
+# Check for game ending
 def checkPlayerWon(player):
-    # Überprüfung von Spalten
+    # Check columns
     for col in range(3):
         if arr_playfield[0][col] == player and arr_playfield[1][col] == player and arr_playfield[2][col] == player:
             return 1
 
-    # Überprüfung von Zeilen
+    # Check rows
     for row in range(3):
         if arr_playfield[row][0] == player and arr_playfield[row][1] == player and arr_playfield[row][2] == player:
             return 1
 
-    # Überprüfung der Hauptdiagonale
+    # Check main diagonal
     if arr_playfield[0][0] == player and arr_playfield[1][1] == player and arr_playfield[2][2] == player:
         return 1
 
-    # Überprüfung der Gegendiagonale
+    # Check counter-diagonal
     if arr_playfield[0][2] == player and arr_playfield[1][1] == player and arr_playfield[2][0] == player:
         return 1
 
-    # Unentschieden prüfen
+    # Check for a draw
     if moveCount == 9:
         return 2
 
@@ -128,7 +128,7 @@ def canBotBlock():
         arr_playfield[row][column] = str(move)  # revert the move
     return None
 
-#easy bot - this bot will just place its sign randomly
+# Easy bot - this bot will just place its sign randomly
 def easyBot():
     global userInput
     legalMoves = getLegalMoves()
@@ -137,7 +137,7 @@ def easyBot():
     printPlayfield()
     userInput = randomMove
 
-#medium bot - this bot will try to win itself if possible, otherwise it will just place its sign randomly
+# Medium bot - this bot will try to win itself if possible, otherwise it will just place its sign randomly
 def mediumBot():
     global userInput
     if canBotWin() != None:
@@ -147,28 +147,27 @@ def mediumBot():
     else:
         easyBot()
 
+# Hard bot - this bot will try to win, block the player, or use minimax if necessary
 def hardBot():
     global userInput
 
-    # 1. Prüfen, ob der Bot direkt gewinnen kann
+     # 1. Check if the bot can win directly
     winMove = canBotWin()
     if winMove is not None:
         row, col = findPlayedRow(winMove), findPlayedColumn(winMove)
         arr_playfield[row][col] = "O"
-        #printPlayfield()
         userInput = winMove
         return
 
-    # 2. Prüfen, ob der Bot den Spieler blockieren muss
+    # 2. Check if the bot needs to block the player
     blockMove = canBotBlock()
     if blockMove is not None:
         row, col = findPlayedRow(blockMove), findPlayedColumn(blockMove)
         arr_playfield[row][col] = "O"
-        #printPlayfield()
         userInput = blockMove
         return
 
-    # 3. Falls kein direkter Gewinn oder Block möglich ist → Minimax verwenden
+    # 3. If no immediate win or block is possible → use Minimax
     bestMove = None
     bestScore = float('-inf')
 
@@ -176,10 +175,9 @@ def hardBot():
         row = findPlayedRow(move)
         column = findPlayedColumn(move)
 
-        arr_playfield[row][column] = "O"  # Testweise den Zug setzen
-        #printPlayfield()
-        score = minimax(False)  # Minimax für den Gegner aufrufen
-        arr_playfield[row][column] = str(move)  # Zug zurücksetzen
+        arr_playfield[row][column] = "O" # Test placing move
+        score = minimax(False)  # Call Minimax for opponent
+        arr_playfield[row][column] = str(move)  # Reset move
 
         if score > bestScore:
             bestScore = score
@@ -189,18 +187,18 @@ def hardBot():
         row = findPlayedRow(bestMove)
         column = findPlayedColumn(bestMove)
         arr_playfield[row][column] = "O"
-        #printPlayfield()
         userInput = bestMove
 
+# Minimax algorithm for optimal bot moves
 def minimax(isMaximizing):
     winner_X = checkPlayerWon("X")
     winner_O = checkPlayerWon("O")
 
-    if winner_O == 1:  # Bot gewinnt
+    if winner_O == 1:  # Bot wins
         return 1
-    elif winner_X == 1:  # Spieler gewinnt
+    elif winner_X == 1:  # Player wins
         return -1
-    elif len(getLegalMoves()) == 0:  # Unentschieden
+    elif len(getLegalMoves()) == 0:  # Draw
         return 0
 
     if isMaximizing:
@@ -211,7 +209,7 @@ def minimax(isMaximizing):
 
             arr_playfield[row][column] = "O"
             score = minimax(False)
-            arr_playfield[row][column] = str(move)  # Zug zurücksetzen
+            arr_playfield[row][column] = str(move)  # Reset move
 
             bestScore = max(score, bestScore)
         return bestScore
@@ -224,17 +222,20 @@ def minimax(isMaximizing):
 
             arr_playfield[row][column] = "X"
             score = minimax(True)
-            arr_playfield[row][column] = str(move)  # Zug zurücksetzen
+            arr_playfield[row][column] = str(move)  # Reset move
 
             bestScore = min(score, bestScore)
         return bestScore
     
+# Start questionnaire for game mode selection   
 def startQuestionaire():
     global computerOpponent
     global botDifficulty
 
-    # Spielstart
+    # Game start
     print("Welcome to TicTacToe")
+
+    # Reset the playfield and check if the player wants to play again
     print("Do you want to play TicTacToe alone? (y/n)")
 
     while True:
@@ -281,11 +282,11 @@ while playerWantsToPlay:
     startQuestionaire()
 
     while not gameEnded:
-        # Zug Spieler 1
+         # Player 1's turn
         if playerOneTurn:
             print("Player 1, please Enter the desired Space for your X to be placed")
 
-            # Nutzerinput setzen und überprüfen
+             # Set and validate user input
             try:
                 userInput = int(input())
             except:
@@ -297,15 +298,14 @@ while playerWantsToPlay:
                 except:
                     print("Please Enter a Number")
 
-            # Setzen des Spielzeichens
+           # Set the game piece
             arr_playfield[findPlayedRow(userInput)][findPlayedColumn(userInput)] = "X"
-            moveCount += 1
 
-            # Ausgabe Spielfeld
+            # Display the playfield
             printPlayfield()
 
-            # Prüfen, ob ein Spieler gewonnen hat
-            gameStatus = checkPlayerWon("X") 
+            # Check if a player has won
+            gameStatus = checkPlayerWon("X") if not playerOneTurn else checkPlayerWon("O")
             match gameStatus:
                 case 1:
                     print("Player 1 Won")
@@ -318,22 +318,21 @@ while playerWantsToPlay:
 
             playerOneTurn = False
 
-        # Zug Spieler 2
+         # Player 2's turn
         else:
             if computerOpponent:
                 print("Bot is thinking")
-                # Botzug
+                # Bot move
                 if botDifficulty == 0:
                     easyBot()
                 elif botDifficulty == 1:
                     mediumBot()
                 elif botDifficulty == 2:
                     hardBot()
-                moveCount += 1
             else:
                 print("Player 2, please Enter the desired Space for your O to be placed")
 
-                # Nutzerinput setzen und überprüfen
+                # Set and validate user input
                 try:
                     userInput = int(input())
                 except:
@@ -345,14 +344,13 @@ while playerWantsToPlay:
                     except:
                         print("Please Enter a Number")
 
-                # Setzen des Spielzeichens
+                # Set the game piece
                 arr_playfield[findPlayedRow(userInput)][findPlayedColumn(userInput)] = "O"
-                moveCount += 1
 
             # Ausgabe Spielfeld
             printPlayfield()
-            # Prüfen, ob ein Spieler gewonnen hat
-            gameStatus = checkPlayerWon("O")
+             # Check if a player has won
+            gameStatus = checkPlayerWon("X") if playerOneTurn else checkPlayerWon("O")
             match gameStatus:
                 case 1:
                     if computerOpponent:
@@ -368,9 +366,10 @@ while playerWantsToPlay:
 
             playerOneTurn = True
 
+        moveCount += 1
 
 #--------------------------------------------------------------------------------
-# Abfrage ob das Spiel erneut gestartet werden soll
+# Ask if the player wants to restart the game
 
     print("Do you want to play again? (y/n)")
 
