@@ -299,12 +299,13 @@ while playerWantsToPlay:
 
             # Setzen des Spielzeichens
             arr_playfield[findPlayedRow(userInput)][findPlayedColumn(userInput)] = "X"
+            moveCount += 1
 
             # Ausgabe Spielfeld
             printPlayfield()
 
             # Prüfen, ob ein Spieler gewonnen hat
-            gameStatus = checkPlayerWon("X") if not playerOneTurn else checkPlayerWon("O")
+            gameStatus = checkPlayerWon("X") 
             match gameStatus:
                 case 1:
                     print("Player 1 Won")
@@ -328,6 +329,7 @@ while playerWantsToPlay:
                     mediumBot()
                 elif botDifficulty == 2:
                     hardBot()
+                moveCount += 1
             else:
                 print("Player 2, please Enter the desired Space for your O to be placed")
 
@@ -345,11 +347,12 @@ while playerWantsToPlay:
 
                 # Setzen des Spielzeichens
                 arr_playfield[findPlayedRow(userInput)][findPlayedColumn(userInput)] = "O"
+                moveCount += 1
 
             # Ausgabe Spielfeld
             printPlayfield()
             # Prüfen, ob ein Spieler gewonnen hat
-            gameStatus = checkPlayerWon("X") if playerOneTurn else checkPlayerWon("O")
+            gameStatus = checkPlayerWon("O")
             match gameStatus:
                 case 1:
                     if computerOpponent:
@@ -365,7 +368,6 @@ while playerWantsToPlay:
 
             playerOneTurn = True
 
-        moveCount += 1
 
 #--------------------------------------------------------------------------------
 # Abfrage ob das Spiel erneut gestartet werden soll
