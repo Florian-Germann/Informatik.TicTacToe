@@ -15,13 +15,20 @@ arr_playfield = [["1", "2", "3"],
                  ["4", "5", "6"],
                  ["7", "8", "9"]]
 
+# ANSI Escape Codes für Farben
+RED = "\033[91m"  # Rotes X
+BLUE = "\033[94m"  # Blaues O
+RESET = "\033[0m"  # Zurück zur Standardfarbe
+
 def printPlayfield():
     print("\n")
-    print(" " + arr_playfield[0][0] + " | " + arr_playfield[0][1] + " | " + arr_playfield[0][2])
-    print("---+---+---")
-    print(" " + arr_playfield[1][0] + " | " + arr_playfield[1][1] + " | " + arr_playfield[1][2])
-    print("---+---+---")
-    print(" " + arr_playfield[2][0] + " | " + arr_playfield[2][1] + " | " + arr_playfield[2][2])
+    for row in arr_playfield:
+        print(" " + 
+              (RED + row[0] + RESET if row[0] == "X" else BLUE + row[0] + RESET if row[0] == "O" else row[0]) + " | " +
+              (RED + row[1] + RESET if row[1] == "X" else BLUE + row[1] + RESET if row[1] == "O" else row[1]) + " | " +
+              (RED + row[2] + RESET if row[2] == "X" else BLUE + row[2] + RESET if row[2] == "O" else row[2]))
+        if row != arr_playfield[-1]:
+            print("---+---+---")
     print("\n")
 
 #Merker Variablen Deklaration
