@@ -7,6 +7,7 @@
 #######################################################################################
 
 import random
+import time
 
 #-------------------------------------------------------------------------------------
 
@@ -121,7 +122,7 @@ def canBotBlock():
         row = findPlayedRow(move)
         column = findPlayedColumn(move)
 
-        arr_playfield[row][column] = "X"
+        arr_playfield[row][column] ="X"
         if checkPlayerWon("X") == 1:
             arr_playfield[row][column] = str(move)  # revert the move
             return move
@@ -131,6 +132,9 @@ def canBotBlock():
 # Easy bot - this bot will just place its sign randomly
 def easyBot():
     global userInput
+
+    time.sleep(1)  # Delay for 1 second
+
     legalMoves = getLegalMoves()
     randomMove = random.choice(legalMoves)
     arr_playfield[findPlayedRow(randomMove)][findPlayedColumn(randomMove)] = "O"
@@ -140,6 +144,9 @@ def easyBot():
 # Medium bot - this bot will try to win itself if possible, otherwise it will just place its sign randomly
 def mediumBot():
     global userInput
+
+    time.sleep(1)  # Delay for 1 second
+
     if canBotWin() != None:
         arr_playfield[findPlayedRow(canBotWin())][findPlayedColumn(canBotWin())] = "O"
         printPlayfield()
@@ -150,6 +157,8 @@ def mediumBot():
 # Hard bot - this bot will try to win, block the player, or use minimax if necessary
 def hardBot():
     global userInput
+
+    time.sleep(1)  # Delay for 1 second
 
      # 1. Check if the bot can win directly
     winMove = canBotWin()
@@ -322,6 +331,7 @@ while playerWantsToPlay:
         else:
             if computerOpponent:
                 print("Bot is thinking")
+                time.sleep(1)  # Delay for 1 second
                 # Bot move
                 if botDifficulty == 0:
                     easyBot()
@@ -367,6 +377,7 @@ while playerWantsToPlay:
             playerOneTurn = True
 
         moveCount += 1
+
 
 #--------------------------------------------------------------------------------
 # Ask if the player wants to restart the game
