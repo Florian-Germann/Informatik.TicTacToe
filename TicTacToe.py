@@ -1,13 +1,12 @@
 # THIS IS A GAME OF TIC TAC TOE YOU CAN PLAY AGAINST THE COMPUTER OR ANOTHER PLAYER #
 
-# AUTHOR: Florian Germann
-# LAST CHANGED: 2025-02-16
-# LAST CHANGED BY: Piet Kreuzmann
+# AUTHOR: Florian Germann, Piet Kreuzmann, Noah Schumann, Cristian Petrulat
+# LAST CHANGED: 2025-02-14
 
 #######################################################################################
 
-import random
-import time
+import random #used for the bot to make random moves
+import time #used for the bot to make a delay between moves
 
 #-------------------------------------------------------------------------------------
 
@@ -17,9 +16,9 @@ arr_playfield = [["1", "2", "3"],
                  ["7", "8", "9"]]
 
 # ANSI Escape Codes for colors
-RED = "\033[91m"  # Rotes X
-BLUE = "\033[94m"  # Blaues O
-RESET = "\033[0m"  # Zurück zur Standardfarbe
+RED = "\033[91m"  # Red X
+BLUE = "\033[94m"  # Blue O
+RESET = "\033[0m"  # back to default color
 
 def printPlayfield():
     print("\n")
@@ -32,7 +31,7 @@ def printPlayfield():
             print("---+---+---")
     print("\n")
 
-# Marker variable declaration
+#variable declaration
 gameEnded = False
 playerOneTurn = True
 userInput = 1
@@ -244,7 +243,7 @@ def startQuestionaire():
     # Game start
     print("Welcome to TicTacToe")
 
-    # Reset the playfield and check if the player wants to play again
+    #check if the player wants to play against the computer
     print("Do you want to play TicTacToe alone? (y/n)")
 
     while True:
@@ -332,7 +331,7 @@ while playerWantsToPlay:
         else:
             if computerOpponent:
                 print("Bot is thinking")
-                time.sleep(1)  # Delay for 1 second
+                time.sleep(0.5)  # Delay for 1 second
                 # Bot move
                 if botDifficulty == 0:
                     easyBot()
@@ -340,7 +339,9 @@ while playerWantsToPlay:
                     mediumBot()
                 elif botDifficulty == 2:
                     hardBot()
+
                 moveCount += 1
+
             else:
                 print("Player 2, please Enter the desired Space for your O to be placed")
 
@@ -360,7 +361,7 @@ while playerWantsToPlay:
                 arr_playfield[findPlayedRow(userInput)][findPlayedColumn(userInput)] = "O"
                 moveCount += 1
 
-            # Ausgabe Spielfeld
+            # Output the playfield
             printPlayfield()
              # Check if a player has won
             gameStatus = checkPlayerWon("O")
