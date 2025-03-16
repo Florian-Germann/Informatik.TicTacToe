@@ -51,14 +51,24 @@ def getLegalMoves():
 
 # Function to validate input
 def isInputValid(input):
+    global  userInput
+
+    try:
+        input = int(input)
+    except:
+        print("Please Enter a Number")
+        return False
+    
+    
     if (input > 0) and (input < 10):
         if not(arr_playfield[findPlayedRow(input)][findPlayedColumn(input)] == "X" or arr_playfield[findPlayedRow(input)][findPlayedColumn(input)] == "O"):
+            userInput = input
             return True
         else:
             print("Entered Space is already taken")
             return False
     else:
-        print("Entered Charakter was invalid")
+        print("Enter a number between 1 and 9")
         return False
 
 # Function to determine the row
@@ -295,16 +305,10 @@ while playerWantsToPlay:
             print("Player 1, please Enter the desired Space for your X to be placed")
 
              # Set and validate user input
-            try:
-                userInput = int(input())
-            except:
-                print("Please Enter a Number")
+            userInput = input()
 
             while isInputValid(userInput) == False:
-                try:
-                    userInput = int(input())
-                except:
-                    print("Please Enter a Number")
+                userInput = input()
 
            # Set the game piece
             arr_playfield[findPlayedRow(userInput)][findPlayedColumn(userInput)] = "X"
@@ -346,16 +350,10 @@ while playerWantsToPlay:
                 print("Player 2, please Enter the desired Space for your O to be placed")
 
                 # Set and validate user input
-                try:
-                    userInput = int(input())
-                except:
-                    print("Please Enter a Number")
+                userInput = input()
 
                 while isInputValid(userInput) == False:
-                    try:
-                        userInput = int(input())
-                    except:
-                        print("Please Enter a Number")
+                    userInput = input()
 
                 # Set the game piece
                 arr_playfield[findPlayedRow(userInput)][findPlayedColumn(userInput)] = "O"
